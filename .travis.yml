@@ -1,0 +1,9 @@
+language: csharp
+solution: trafficlights.sln
+branches:
+  only:
+    - master
+    - stable
+    - beta
+    - nightly
+    - dev
