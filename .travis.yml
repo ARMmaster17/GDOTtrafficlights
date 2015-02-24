@@ -2,5 +2,8 @@ language: csharp
 solution: trafficlights.sln
 branches:
   only:
-    - dev
+    - master
+    - stable
+    - beta
     - nightly
+    - dev
