@@ -1,2 +1,6 @@
 language: csharp
 solution: trafficlights.sln
+branches:
+  only:
+    - dev
+    - nightly
