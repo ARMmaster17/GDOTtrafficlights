@@ -1,5 +1,5 @@
 language: csharp
-solution: trafficlights.sln
+solution: GDOTtrafficsystem.sln
 branches:
   only:
     - master
