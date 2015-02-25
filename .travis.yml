@@ -3,9 +3,5 @@ solution: GDOTtrafficsystem.sln
 branches:
   only:
     - master
-    - stable
-    - beta
-    - nightly
-    - dev
 notifications:
   email: false
