@@ -7,3 +7,5 @@ branches:
     - beta
     - nightly
     - dev
+notifications:
+  email: false
