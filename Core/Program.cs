@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,11 +55,62 @@ namespace Core
                     appLangStrings[i] = line.Replace("{" + i + "}=", "");
                 }
             }
-            Console.WriteLine(appLangStrings[0]);
+            Console.WriteLine(appLangStrings[0]); //Notify user we are starting the pipe server
             //Open the pipe server
-            Console.WriteLine(appLangStrings[1]);
+            NamedPipeServerStream pipeServer = createServer();
+            Console.WriteLine(appLangStrings[1]); //Notify the user we are starting the modules
             //Insert function to run executables of other modules
+
+            /////////////////////////////
+            // END OF LOADING SEQUENCE //
+            /////////////////////////////
+
+            //Start listening for commands
+            while(true)
+            {
+                pipeServer.WaitForConnection();
+                StreamReader reader = new StreamReader(pipeServer);
+                StreamWriter writer = new StreamWriter(pipeServer);
+                string ln = interpretCommand(reader.ReadLine());
+                if (ln.Contains("|EXIT|tl_core"))
+                {
+                    string[] msg = ln.Split('|');
+                    Console.WriteLine("CORE: " + msg[0] + "has ordered a shutdown because " + msg[3]);
+                    break;
+                }
+                writer.WriteLine(ln);
+                writer.Flush();
+                reader.Dispose();
+                writer.Dispose();
+            }
+            //terminate function
             Console.ReadLine();
+        }
+        private static string interpretCommand(string cmd)
+        {
+            string[] cmda = cmd.Split('|');
+            if(cmda[3] == "tl_core")
+            {
+            }
+            switch (cmda[2])
+            {
+                case "tl_core":
+                    if (cmda[1] == "EXIT")
+                    {
+                        return cmda[0] + "|EXIT|tl_core|" + cmda[3];
+                    }
+                    else
+                    {
+                        return "tl_core|ERROR|Unrecognized command";
+                    }
+                default:
+                    return "tl_core|ERROR|Unrecognized command";
+            }
+        }
+        private static NamedPipeServerStream createServer()
+        {
+            NamedPipeServerStream server = new NamedPipeServerStream("GDOTTL");
+            return server;
         }
     }
 }
