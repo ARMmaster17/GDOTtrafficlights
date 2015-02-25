@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
@@ -18,6 +19,8 @@ namespace Core
             string appDir;  //Working directory of application
             string appLang = "en-us"; //Language used by application, English by default
             string[] appLangStrings =  new string[20]; //Collection of strings for specified language
+            string[] appModPaths = new string[20]; //Collection of executable paths for modules
+
             Console.WriteLine("Loading settings...");
             //Load and parse the settings file
             appDir = Directory.GetParent(Directory.GetCurrentDirectory()).ToString();
@@ -46,32 +49,84 @@ namespace Core
                     }
                 }
             }
+
             //Initialize the language file
             using (StreamReader sr = new StreamReader(appDir + "/lang/" + appLang + "/strings.ini")) //To allow for easy disposal of object when we are done.
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < appLangStrings.Length; i++)
                 {
                     string line = sr.ReadLine();
-                    appLangStrings[i] = line.Replace("{" + i + "}=", "");
+                    try
+                    {
+                        appLangStrings[i] = line.Replace("{" + i + "}=", "");
+                    }
+                    catch
+                    {
+                        //we have hit the end of the file
+                        break;
+                    }
                 }
             }
             Console.WriteLine(appLangStrings[0]); //Notify user we are starting the pipe server
             //Open the pipe server
             NamedPipeServerStream pipeServer = createServer();
             Console.WriteLine(appLangStrings[1]); //Notify the user we are starting the modules
+
             //Insert function to run executables of other modules
+            //Get list of modules to start
+            using (StreamReader sr = new StreamReader(appDir + "/modules.ini"))
+            {
+                for (int i = 0; i < appModPaths.Length; i++)
+                {
+                    appModPaths[i] = sr.ReadLine();
+                }
+            }
+            //Execute each module
+            foreach (string i in appModPaths)
+            {
+                if(i == null)
+                {
+                    //break, we have hit the end of the list of modules
+                    break;
+                }
+                else
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            Process.Start(appDir + i);
+                            Console.WriteLine("CORE: Module " + i + " has been started");
+                        }
+                        catch (FileNotFoundException e)
+                        {
+                            Console.WriteLine("CORE: An error has occured launching module " + i);
+                            Console.WriteLine("Details: " + e.ToString());
+                        }
+                        catch
+                        {
+                            Console.WriteLine("CORE: An unknown error has occured launching module " + i);
+                        }
+                    });
+                }
+            }
 
             /////////////////////////////
             // END OF LOADING SEQUENCE //
             /////////////////////////////
 
             //Start listening for commands
+            Console.WriteLine("Ready...");
             while(true)
             {
                 pipeServer.WaitForConnection();
                 StreamReader reader = new StreamReader(pipeServer);
                 StreamWriter writer = new StreamWriter(pipeServer);
-                string ln = interpretCommand(reader.ReadLine());
+                string cmdraw = reader.ReadLine();
+#if DEBUG
+                Console.WriteLine("CORE: Recieved message " + cmdraw);
+#endif
+                string ln = interpretCommand(cmdraw);
                 if (ln.Contains("|EXIT|tl_core"))
                 {
                     string[] msg = ln.Split('|');
@@ -84,7 +139,8 @@ namespace Core
                 writer.Dispose();
             }
             //terminate function
-            Console.ReadLine();
+            Console.Write("Press any key to quit: ");
+            Console.ReadKey();
         }
         private static string interpretCommand(string cmd)
         {
