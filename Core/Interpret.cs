@@ -10,7 +10,7 @@ namespace Core
     {
         public static string dbEngine(string cmd)
         {
-
+            return "";
         }
     }
 }
