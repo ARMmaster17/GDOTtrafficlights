@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using TLpserver;
 
 namespace TLwebgui
 {
@@ -17,17 +18,12 @@ namespace TLwebgui
             {
                 if (this.Request["cmd"] != null)
                 {
-                    using (NamedPipeClientStream client = new NamedPipeClientStream("GDOTTL")) //creates a disposable interface that allows for other connections when not active
-                    {
-                        client.Connect();
-                        StreamReader reader = new StreamReader(client);
-                        StreamWriter writer = new StreamWriter(client);
-                        writer.WriteLine(this.Request["cmd"]);
-                        writer.Flush();
-                        Response.Write(reader.ReadLine());
-                        client.Close();
-                    }
+                    Response.Write(pipeManager.sendMsg(this.Request["cmd"]));
                     Response.Write("<br />");
+                }
+                else
+                {
+                    //This is the first time this page is being loaded, just show the textbox and button
                 }
             }
             else

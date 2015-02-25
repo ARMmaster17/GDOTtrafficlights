@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TLpserver;
 
 namespace TLgui
 {
@@ -22,17 +23,9 @@ namespace TLgui
 
         private void button1_Click(object sender, EventArgs e)
         {
-            using (NamedPipeClientStream client = new NamedPipeClientStream("GDOTTL")) //creates a disposable interface that allows for other connections when not active
-            {
-                client.Connect();
-                StreamReader reader = new StreamReader(client);
-                StreamWriter writer = new StreamWriter(client);
-                writer.WriteLine(textBox1.Text);
-                writer.Flush();
-                textBox1.Text = "";
-                textBox2.Text += reader.ReadLine() + Environment.NewLine;
-                client.Close();
-            }
+            string result = pipeManager.sendMsg(textBox1.Text);
+            textBox1.Text = "";
+            textBox2.Text += result + Environment.NewLine;
         }
     }
 }
