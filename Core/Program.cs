@@ -69,7 +69,7 @@ namespace Core
             }
             Console.WriteLine(appLangStrings[0]); //Notify user we are starting the pipe server
             //Open the pipe server
-            NamedPipeServerStream pipeServer = createServer();
+            //NamedPipeServerStream pipeServer = createServer(); //this is done automatically in the pipe-listen loop
             Console.WriteLine(appLangStrings[1]); //Notify the user we are starting the modules
 
             //Insert function to run executables of other modules
@@ -119,24 +119,34 @@ namespace Core
             Console.WriteLine("Ready...");
             while(true)
             {
-                pipeServer.WaitForConnection();
-                StreamReader reader = new StreamReader(pipeServer);
-                StreamWriter writer = new StreamWriter(pipeServer);
-                string cmdraw = reader.ReadLine();
-#if DEBUG
-                Console.WriteLine("CORE: Recieved message " + cmdraw);
-#endif
-                string ln = interpretCommand(cmdraw);
-                if (ln.Contains("|EXIT|tl_core"))
+                using (NamedPipeServerStream pipeServer = new NamedPipeServerStream("GDOTTL"))
                 {
-                    string[] msg = ln.Split('|');
-                    Console.WriteLine("CORE: " + msg[0] + "has ordered a shutdown because " + msg[3]);
-                    break;
+                    try
+                    {
+                        pipeServer.WaitForConnection();
+                        StreamReader reader = new StreamReader(pipeServer);
+                        StreamWriter writer = new StreamWriter(pipeServer);
+                        string cmdraw = reader.ReadLine();
+#if DEBUG
+                        Console.WriteLine("CORE: Recieved message " + cmdraw);
+#endif
+                        string ln = interpretCommand(cmdraw);
+                        if (ln.Contains("|EXIT|tl_core"))
+                        {
+                            string[] msg = ln.Split('|');
+                            Console.WriteLine("CORE: " + msg[0] + "has ordered a shutdown because " + msg[3]);
+                            writer.WriteLine("tl_core|SHUTDOWN|tl_all|f");
+                            writer.Flush();
+                            break;
+                        }
+                        writer.WriteLine(ln);
+                        writer.Flush();
+                    }
+                    catch
+                    {
+                        //do nothing, there was a pipe error that will most likely be fixed next loop
+                    }
                 }
-                writer.WriteLine(ln);
-                writer.Flush();
-                reader.Dispose();
-                writer.Dispose();
             }
             //terminate function
             Console.Write("Press any key to quit: ");
@@ -145,9 +155,6 @@ namespace Core
         private static string interpretCommand(string cmd)
         {
             string[] cmda = cmd.Split('|');
-            if(cmda[3] == "tl_core")
-            {
-            }
             switch (cmda[2])
             {
                 case "tl_core":
@@ -162,11 +169,6 @@ namespace Core
                 default:
                     return "tl_core|ERROR|Unrecognized command";
             }
-        }
-        private static NamedPipeServerStream createServer()
-        {
-            NamedPipeServerStream server = new NamedPipeServerStream("GDOTTL");
-            return server;
         }
     }
 }
