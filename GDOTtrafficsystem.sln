@@ -5,6 +5,18 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{062A0FEC-EC42-41CB-80A8-DAB7DE1A9D2E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lang", "lang", "{07146CFC-A95B-4D6D-9966-F73A948817D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-us", "en-us", "{1177C4BA-C7C8-4864-9338-73D6AA722E09}"
+	ProjectSection(SolutionItems) = preProject
+		strings.ini = strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04ED0125-17F0-460D-A8D0-B4855819C96C}"
+	ProjectSection(SolutionItems) = preProject
+		settings.ini = settings.ini
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1177C4BA-C7C8-4864-9338-73D6AA722E09} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
 	EndGlobalSection
 EndGlobal
