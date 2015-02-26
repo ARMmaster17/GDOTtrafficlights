@@ -13,6 +13,7 @@ namespace TLwebgui
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
+            //routes.MapHttpRoute( name: "Default", routeTemplate: "{controller}/{id}", defaults: new { id = RouteParameter.Optional });
         }
     }
 }
