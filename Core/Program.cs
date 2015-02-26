@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
+using DBengine;
 
 namespace Core
 {
@@ -16,6 +17,8 @@ namespace Core
         {
             Console.WriteLine("Starting up...");
             //Insert startup args + variables
+            Librarian librarian = new Librarian(); //DBengine database manager
+            int[] trafficstats = {0, 0}; //Temporary array until DBengine is operational
             string appDir;  //Working directory of application
             string appLang = "en-us"; //Language used by application, English by default
             string[] appLangStrings =  new string[20]; //Collection of strings for specified language
@@ -136,7 +139,8 @@ namespace Core
 #if DEBUG
                         Console.WriteLine("CORE: Recieved message " + cmdraw);
 #endif
-                        string ln = interpretCommand(cmdraw);
+                        //string ln = interpretCommand(cmdraw, librarian);
+                        string ln = interpretCommand(cmdraw, ref trafficstats); //Using ref to avoid UNSAFE method attribute with pointers
                         if (ln.Contains("|EXIT|tl_core"))
                         {
                             string[] msg = ln.Split('|');
@@ -158,25 +162,47 @@ namespace Core
             Console.Write("Press any key to quit: ");
             Console.ReadKey();
         }
-        private static string interpretCommand(string cmd)
+        //private static string interpretCommand(string cmd, Librarian lib)
+        private /*unsafe*/ static string interpretCommand(string cmd, ref int[] lightstatus) //Use for debugging purposes until DBengine is functional
         {
             string[] cmda = cmd.Split('|');
             switch (cmda[2])
             {
                 case "tl_core":
+                    // SENDER|EXIT|tl_core
                     if (cmda[1] == "EXIT")
                     {
                         return cmda[0] + "|EXIT|tl_core|" + cmda[3];
                     }
+                    // SENDER|ECHO|tl_core|Message
                     else if (cmda[1] == "ECHO")
                     {
                         Console.WriteLine(cmda[3]);
                         return "tl_core|STATUS|" + cmda[0] + "|0";
                     }
-                    else if (cmda[1] == "LIGHTSTAT")
+                    // SENDER|LIGHTSTAT|tl_core|INDEX
+                    else if (cmda[1] == "LIGHTSTAT") //Depreciated, copied code from tl_db|GET
                     {
                         // Right now for debuging purposes, return green
-                        return "tl_rest|STATUS|tl_core|0";
+                        //return "tl_rest|STATUS|tl_core|0";
+                        //Depreciated, uses code below copied from tl_db|GET
+                        return "tl_core|STATUS|" + cmda[0] + "|" + lightstatus[Convert.ToInt32(cmda[3])].ToString();
+                    }
+                    else
+                    {
+                        return "tl_core|ERROR|" + cmda[0] + "|Unrecognized command";
+                    }
+                case "tl_db":
+                    // SENDER|GET|tl_db|INDEX
+                    if (cmda[1] == "GET")
+                    {
+                        return "tl_db|STATUS|" + cmda[0] + "|" + lightstatus[Convert.ToInt32(cmda[3])];
+                    }
+                    // SENDER|SET|tl_db|INDEX|VALUE
+                    else if (cmda[1] == "SET")
+                    {
+                        lightstatus[Convert.ToInt32(cmda[3])] = Convert.ToInt32(cmda[4]);
+                        return "tl_db|STATUS|" + cmda[0] + "|" + cmda[4];
                     }
                     else
                     {

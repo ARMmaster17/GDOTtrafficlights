@@ -107,6 +107,54 @@ namespace tlRESTsvr
                     response.ContentLength64 = buffer.Length;
                     st.Write(buffer, 0, buffer.Length);
                 }
+                else if (page.EndsWith("/setlightstat"))
+                {
+                    page.Replace("/setlightstat", "");
+                    char[] ltr = page.ToCharArray(0, page.Length);
+                    string id = "";
+                    int index = ltr.Length - 1;
+                    int islightstat = 0; //0 for text, 1 for value, 2 for index
+                    int ind = 0;
+                    int val = 0;
+                    for (int i = index; i > 0; i--)
+                    {
+
+                        if (ltr[i] == '/')
+                        {
+                            //end of id field, break
+                            if (islightstat == 0)
+                            {
+                                id = "";
+                                islightstat++;
+                            }
+                            else if(islightstat == 1)
+                            {
+                                val = Convert.ToInt32(id);
+                                id = "";
+                                islightstat++;
+                            }
+                            else
+                            {
+                                ind = Convert.ToInt32(id);
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            id = ltr[i] + id;
+                        }
+                    }
+#if DEBUG
+                    Console.WriteLine("Writing value of " + val.ToString() + " to index " + ind.ToString());
+#endif
+                    string resp = pipeManager.sendMsg("tl_rest|LIGHTSTAT|tl_core|" + ind.ToString() + "|" + val.ToString());
+                    Stream st = response.OutputStream;
+                    string res = resp.Replace("tl_db|STATUS|tl_rest|", null);
+                    string msg = "<xml><trafficstatus><status id=\"" + ind.ToString() + "\">" + res + "</status></trafficstatus></xml>";
+                    byte[] buffer = Encoding.UTF8.GetBytes(msg);
+                    response.ContentLength64 = buffer.Length;
+                    st.Write(buffer, 0, buffer.Length);
+                }
                 context.Response.Close();
             }
         }
