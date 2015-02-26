@@ -162,12 +162,17 @@ namespace Core
                     {
                         return cmda[0] + "|EXIT|tl_core|" + cmda[3];
                     }
+                    else if (cmda[1] == "ECHO")
+                    {
+                        Console.WriteLine(cmda[3]);
+                        return "tl_core|STATUS|" + cmda[0] + "|0";
+                    }
                     else
                     {
-                        return "tl_core|ERROR|Unrecognized command";
+                        return "tl_core|ERROR|" + cmda[0] + "Unrecognized command";
                     }
                 default:
-                    return "tl_core|ERROR|Unrecognized command";
+                    return "tl_core|ERROR|" + cmda[0] + "Unrecognized command";
             }
         }
     }
