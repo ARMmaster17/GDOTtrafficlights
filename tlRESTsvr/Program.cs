@@ -47,6 +47,7 @@ namespace tlRESTsvr
             }
 #else
             server.Prefixes.Add("http://localhost:81/");
+            server.Prefixes.Add("http://192.168.1.148:81/");
 #endif
 
 
