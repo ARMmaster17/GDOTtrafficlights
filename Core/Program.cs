@@ -43,6 +43,10 @@ namespace Core
                         appLang = line.Replace("lang=", null);
                         Console.WriteLine("Language detected: " + appLang);
                     }
+                    else if (line.StartsWith("hostname="))
+                    {
+                        // Do nothing, this is a valid setting, but it is not used by the core
+                    }
                     else
                     {
                         Console.WriteLine("WARNING: Unknown setting: " + line);
@@ -95,7 +99,9 @@ namespace Core
                     {
                         try
                         {
-                            Process.Start(appDir + i);
+                            var startInfo = new ProcessStartInfo(appDir + i) { Verb = "runas" };
+                            Process.Start(startInfo);
+                            //Process.Start(appDir + i);
                             Console.WriteLine("CORE: Module " + i + " has been started");
                         }
                         catch (FileNotFoundException e)
@@ -167,12 +173,17 @@ namespace Core
                         Console.WriteLine(cmda[3]);
                         return "tl_core|STATUS|" + cmda[0] + "|0";
                     }
+                    else if (cmda[1] == "LIGHTSTAT")
+                    {
+                        // Right now for debuging purposes, return green
+                        return "tl_rest|STATUS|tl_core|0";
+                    }
                     else
                     {
-                        return "tl_core|ERROR|" + cmda[0] + "Unrecognized command";
+                        return "tl_core|ERROR|" + cmda[0] + "|Unrecognized command";
                     }
                 default:
-                    return "tl_core|ERROR|" + cmda[0] + "Unrecognized command";
+                    return "tl_core|ERROR|" + cmda[0] + "|Unrecognized command";
             }
         }
     }
