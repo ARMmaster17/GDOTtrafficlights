@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLwebgui", "TLwebgui\TLwebg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLpserver", "TLpserver\TLpserver.csproj", "{6E9954CD-5531-4C8A-BD83-CD3C78BB8553}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tlRestService", "tlRestService\tlRestService.csproj", "{FBF1460F-2A49-4CE7-9C2F-4E76F169298F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{6E9954CD-5531-4C8A-BD83-CD3C78BB8553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E9954CD-5531-4C8A-BD83-CD3C78BB8553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E9954CD-5531-4C8A-BD83-CD3C78BB8553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBF1460F-2A49-4CE7-9C2F-4E76F169298F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBF1460F-2A49-4CE7-9C2F-4E76F169298F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBF1460F-2A49-4CE7-9C2F-4E76F169298F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBF1460F-2A49-4CE7-9C2F-4E76F169298F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
