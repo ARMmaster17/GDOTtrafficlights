@@ -9,13 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lang", "lang", "{07146CFC-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-us", "en-us", "{1177C4BA-C7C8-4864-9338-73D6AA722E09}"
 	ProjectSection(SolutionItems) = preProject
-		strings.ini = strings.ini
+		lang\en-us\strings.ini = lang\en-us\strings.ini
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04ED0125-17F0-460D-A8D0-B4855819C96C}"
 	ProjectSection(SolutionItems) = preProject
 		modules.ini = modules.ini
 		settings.ini = settings.ini
+		lang\en-us\strings.ini = lang\en-us\strings.ini
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLgui", "TLgui\TLgui.csproj", "{8AE98586-A5E3-4164-835B-F7C8ACB5D7CC}"

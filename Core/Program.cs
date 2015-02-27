@@ -105,16 +105,16 @@ namespace Core
                             var startInfo = new ProcessStartInfo(appDir + i) { Verb = "runas" };
                             Process.Start(startInfo);
                             //Process.Start(appDir + i);
-                            Console.WriteLine("CORE: Module " + i + " has been started");
+                            Console.WriteLine(appLangStrings[2], i);
                         }
                         catch (FileNotFoundException e)
                         {
-                            Console.WriteLine("CORE: An error has occured launching module " + i);
-                            Console.WriteLine("Details: " + e.ToString());
+                            Console.WriteLine(appLangStrings[3], i);
+                            Console.WriteLine(appLangStrings[4], e.ToString());
                         }
                         catch
                         {
-                            Console.WriteLine("CORE: An unknown error has occured launching module " + i);
+                            Console.WriteLine(appLangStrings[5], i);
                         }
                     });
                 }
@@ -137,14 +137,14 @@ namespace Core
                         StreamWriter writer = new StreamWriter(pipeServer);
                         string cmdraw = reader.ReadLine();
 #if DEBUG
-                        Console.WriteLine("CORE: Recieved message " + cmdraw);
+                        Console.WriteLine(appLangStrings[6], cmdraw);
 #endif
                         //string ln = interpretCommand(cmdraw, librarian);
                         string ln = interpretCommand(cmdraw, ref trafficstats); //Using ref to avoid UNSAFE method attribute with pointers
                         if (ln.Contains("|EXIT|tl_core"))
                         {
                             string[] msg = ln.Split('|');
-                            Console.WriteLine("CORE: " + msg[0] + "has ordered a shutdown because " + msg[3]);
+                            Console.WriteLine(appLangStrings[7], msg[0], msg[3]);
                             writer.WriteLine("tl_core|SHUTDOWN|tl_all|f");
                             writer.Flush();
                             break;
@@ -159,7 +159,7 @@ namespace Core
                 }
             }
             //terminate function
-            Console.Write("Press any key to quit: ");
+            Console.Write(appLangStrings[8]);
             Console.ReadKey();
         }
         //private static string interpretCommand(string cmd, Librarian lib)
