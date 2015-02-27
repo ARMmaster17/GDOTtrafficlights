@@ -103,7 +103,8 @@ namespace tlRESTsvr
                     string resp = pipeManager.sendMsg("tl_rest|LIGHTSTAT|tl_core|" + id);
                     Stream st = response.OutputStream;
                     string res = resp.Replace("tl_rest|STATUS|tl_core|", null);
-                    string msg = "<xml><trafficstatus><status id=\"" + id + "\">" + res + "</status></trafficstatus></xml>";
+                    //string msg = "<xml><trafficstatus><status id=\"" + id + "\">" + res + "</status></trafficstatus></xml>";
+                    string msg = res; //Reduces complexity for Arduino code
                     byte[] buffer = Encoding.UTF8.GetBytes(msg);
                     response.ContentLength64 = buffer.Length;
                     st.Write(buffer, 0, buffer.Length);
@@ -152,6 +153,18 @@ namespace tlRESTsvr
                     Stream st = response.OutputStream;
                     string res = resp.Replace("tl_db|STATUS|tl_rest|", null);
                     string msg = "<xml><trafficstatus><status id=\"" + ind.ToString() + "\">" + res + "</status></trafficstatus></xml>";
+                    byte[] buffer = Encoding.UTF8.GetBytes(msg);
+                    response.ContentLength64 = buffer.Length;
+                    st.Write(buffer, 0, buffer.Length);
+                }
+                else if (page.EndsWith("/updateperiod"))
+                {
+                    int refreshPeriod = 3000; //For debugging purposes, will incorperate DBengine later
+#if DEBUG
+                    Console.WriteLine("Sending refresh value of " + refreshPeriod.ToString());
+#endif
+                    Stream st = response.OutputStream;
+                    string msg = refreshPeriod.ToString();
                     byte[] buffer = Encoding.UTF8.GetBytes(msg);
                     response.ContentLength64 = buffer.Length;
                     st.Write(buffer, 0, buffer.Length);

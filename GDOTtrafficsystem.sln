@@ -102,6 +102,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "es-us", "es-us", "{F9329C90
 		lang\es-us\strings.ini = lang\es-us\strings.ini
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Arduino", "Arduino", "{D14F393B-65A6-4D2C-94AE-17D8029EF5C5}"
+	ProjectSection(SolutionItems) = preProject
+		Arduino\GDOTtrafficREST.ino = Arduino\GDOTtrafficREST.ino
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
