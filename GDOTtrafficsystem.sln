@@ -31,6 +31,77 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tlRESTsvr", "tlRESTsvr\tlRE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBengine", "DBengine\DBengine.csproj", "{41152459-5A67-4D2C-AA47-0E67269BDF65}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en", "en", "{194345C1-C53A-4B58-B8EB-92DFB78DF5AB}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en\strings.ini = lang\en\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-au", "en-au", "{42FD902E-4045-41E8-A0C8-DCD678FD4C3D}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-au\strings.ini = lang\en-au\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-bz", "en-bz", "{166C1735-D104-45AC-92A9-ADB13159E0C2}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-bz\strings.ini = lang\en-bz\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-ca", "en-ca", "{4627D656-E941-4479-BF0D-C272E34FC2D2}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-ca\strings.ini = lang\en-ca\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-cb", "en-cb", "{AEF19C93-11A7-43B6-92CB-4AAA9D9488AF}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-cb\strings.ini = lang\en-cb\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-gb", "en-gb", "{BC12DF03-47DB-4466-9981-9B4B780EA47B}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-gb\strings.ini = lang\en-gb\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-ie", "en-ie", "{2082B9A3-AAD3-40AA-81EB-2A1618D8AA6A}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-ie\strings.ini = lang\en-ie\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-in", "en-in", "{567BDA0A-F02F-4629-A309-C75118F3DA46}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-in\strings.ini = lang\en-in\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-jm", "en-jm", "{4310E662-E93C-450D-8492-179D6D852DB2}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-jm\strings.ini = lang\en-jm\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-nz", "en-nz", "{CFA99BD9-2640-43E8-A23A-370EEAD3B9B5}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-nz\strings.ini = lang\en-nz\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-ph", "en-ph", "{2212AF9C-7F00-415B-BBC0-45FE235010D2}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-ph\strings.ini = lang\en-ph\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-tt", "en-tt", "{4DDD5B17-0B6D-4758-B764-A1492774B504}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-tt\strings.ini = lang\en-tt\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "en-za", "en-za", "{47ACAD14-DCE9-4B56-9EC2-2BD9D3E48A32}"
+	ProjectSection(SolutionItems) = preProject
+		lang\en-za\strings.ini = lang\en-za\strings.ini
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "es-us", "es-us", "{F9329C90-0070-4A6C-BD10-A1AFCAB335FF}"
+	ProjectSection(SolutionItems) = preProject
+		lang\es-us\README.md = lang\es-us\README.md
+		lang\es-us\strings.ini = lang\es-us\strings.ini
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,5 +142,19 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1177C4BA-C7C8-4864-9338-73D6AA722E09} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{194345C1-C53A-4B58-B8EB-92DFB78DF5AB} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{42FD902E-4045-41E8-A0C8-DCD678FD4C3D} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{166C1735-D104-45AC-92A9-ADB13159E0C2} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{4627D656-E941-4479-BF0D-C272E34FC2D2} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{AEF19C93-11A7-43B6-92CB-4AAA9D9488AF} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{BC12DF03-47DB-4466-9981-9B4B780EA47B} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{2082B9A3-AAD3-40AA-81EB-2A1618D8AA6A} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{567BDA0A-F02F-4629-A309-C75118F3DA46} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{4310E662-E93C-450D-8492-179D6D852DB2} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{CFA99BD9-2640-43E8-A23A-370EEAD3B9B5} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{2212AF9C-7F00-415B-BBC0-45FE235010D2} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{4DDD5B17-0B6D-4758-B764-A1492774B504} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{47ACAD14-DCE9-4B56-9EC2-2BD9D3E48A32} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
+		{F9329C90-0070-4A6C-BD10-A1AFCAB335FF} = {07146CFC-A95B-4D6D-9966-F73A948817D2}
 	EndGlobalSection
 EndGlobal
