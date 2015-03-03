@@ -1,3 +1,3 @@
 [submodule "GhostData"]
     path = GhostData
-    url = https://github.com/ARMmaster17/GhostData.git
+    url = git://github.com/ARMmaster17/GhostData.git
