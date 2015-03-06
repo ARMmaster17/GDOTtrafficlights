@@ -1,0 +1,28 @@
+<streetdata>
+  <intersection name="0">
+    <street name="5" length="1" />
+    <street name="6" length="1" />
+    <street name="4" length="1" />
+    <street name="7" length="1" />
+  </intersection>
+  <intersection name="1">
+    <street name="0" length="2" />
+    <street name="6" length="1" />
+    <street name="1" length="2" />
+  </intersection>
+  <intersection name="2">
+    <street name="1" length="2" />
+    <street name="5" length="1" />
+    <street name="2" length="2" />
+  </intersection>
+  <intersection name="3">
+    <street name="2" length="2" />
+    <street name="7" length="1" />
+    <street name="3" length="2" />
+  </intersection>
+  <intersection name="4">
+    <street name="3" length="2" />
+    <street name="4" length="1" />
+    <street name="0" length="2" />
+  </intersection>
+</streetdata>
