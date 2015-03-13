@@ -17,7 +17,7 @@ namespace GhostData
     {
         public GhostDataXML()
         {
-
+            //
         }
     }
     public class GhostDataSQL : GhostDataGeneric
