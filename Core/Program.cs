@@ -43,7 +43,8 @@ namespace Core
                     }
                     if (line.StartsWith("lang="))
                     {
-                        appLang = line.Replace("lang=", null);
+                        // We detected a setting line that defines the locale code
+                        appLang = line.Replace("lang=", null); // Assign it as the language in use
                         Console.WriteLine("Language detected: " + appLang);
                     }
                     else if (line.StartsWith("hostname="))
@@ -52,6 +53,7 @@ namespace Core
                     }
                     else
                     {
+                        // An unknown setting was entered, just skip it
                         Console.WriteLine("WARNING: Unknown setting: " + line);
                     }
                 }
@@ -62,10 +64,10 @@ namespace Core
             {
                 for (int i = 0; i < appLangStrings.Length; i++)
                 {
-                    string line = sr.ReadLine();
+                    string line = sr.ReadLine(); // Read a line from the language file
                     try
                     {
-                        appLangStrings[i] = line.Replace("{" + i + "}=", "");
+                        appLangStrings[i] = line.Replace("{" + i + "}=", ""); // Strip the identifier key out of the string and add it to the language string list
                     }
                     catch
                     {
@@ -81,11 +83,11 @@ namespace Core
 
             //Insert function to run executables of other modules
             //Get list of modules to start
-            using (StreamReader sr = new StreamReader(appDir + "/modules.ini"))
+            using (StreamReader sr = new StreamReader(appDir + "/modules.ini")) // Bind StreamReader to filestream to modules file
             {
                 for (int i = 0; i < appModPaths.Length; i++)
                 {
-                    appModPaths[i] = sr.ReadLine();
+                    appModPaths[i] = sr.ReadLine(); // Add the module to the module list
                 }
             }
             //Execute each module
@@ -98,22 +100,25 @@ namespace Core
                 }
                 else
                 {
+                    // Launch each module on a new thread to prevent basekicks and deadlocks
                     Task.Factory.StartNew(() =>
                     {
                         try
                         {
-                            var startInfo = new ProcessStartInfo(appDir + i) { Verb = "runas" };
+                            var startInfo = new ProcessStartInfo(appDir + i) { Verb = "runas" }; // Run as administrator to bypass firewall
                             Process.Start(startInfo);
                             //Process.Start(appDir + i);
-                            Console.WriteLine(appLangStrings[2], i);
+                            Console.WriteLine(appLangStrings[2], i); // Notify user of launching of module
                         }
                         catch (FileNotFoundException e)
                         {
+                            // We couldn't find the file, catch the error and notify the user
                             Console.WriteLine(appLangStrings[3], i);
                             Console.WriteLine(appLangStrings[4], e.ToString());
                         }
                         catch
                         {
+                            // A weird error occured, notify the user and continue
                             Console.WriteLine(appLangStrings[5], i);
                         }
                     });
@@ -126,28 +131,33 @@ namespace Core
 
             //Start listening for commands
             Console.WriteLine("Ready...");
-            while(true)
+            while(true) // Repeat until program termination
             {
-                using (NamedPipeServerStream pipeServer = new NamedPipeServerStream("GDOTTL"))
+                using (NamedPipeServerStream pipeServer = new NamedPipeServerStream("GDOTTL")) // Create pipe server
                 {
                     try
                     {
+                        // Wait for module to connect
                         pipeServer.WaitForConnection();
+                        // Create IO connections to pipe
                         StreamReader reader = new StreamReader(pipeServer);
                         StreamWriter writer = new StreamWriter(pipeServer);
+                        // Get the incoming message
                         string cmdraw = reader.ReadLine();
 #if DEBUG
-                        Console.WriteLine(appLangStrings[6], cmdraw);
+                        Console.WriteLine(appLangStrings[6], cmdraw); // Post the raw command, if debugging
 #endif
                         //string ln = interpretCommand(cmdraw, librarian);
+                        // Push the command to the interpreter engine
                         string ln = interpretCommand(cmdraw, ref trafficstats); //Using ref to avoid UNSAFE method attribute with pointers
+                        // Check for exit command
                         if (ln.Contains("|EXIT|tl_core"))
                         {
                             string[] msg = ln.Split('|');
                             Console.WriteLine(appLangStrings[7], msg[0], msg[3]);
                             writer.WriteLine("tl_core|SHUTDOWN|tl_all|f");
                             writer.Flush();
-                            break;
+                            break; // Kill the application loop
                         }
                         writer.WriteLine(ln);
                         writer.Flush();
