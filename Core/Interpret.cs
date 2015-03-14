@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    // Not used right now, may be replaced by new class within Core
     class Interpret
     {
         public static string dbEngine(string cmd)
