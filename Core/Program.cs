@@ -13,6 +13,10 @@ namespace Core
 {
     class Program
     {
+        /// <summary>
+        /// Main entry point for the program
+        /// </summary>
+        /// <param name="args">Arguments passed to the program through the command line</param>
         static void Main(string[] args)
         {
             Console.WriteLine("Starting up...");
@@ -172,7 +176,12 @@ namespace Core
             Console.Write(appLangStrings[8]);
             Console.ReadKey();
         }
-        //private static string interpretCommand(string cmd, Librarian lib)
+        /// <summary>
+        /// Interprets a given command, then performes the neccessary action
+        /// </summary>
+        /// <param name="cmd">Raw command from pipe</param>
+        /// <param name="lightstatus">Pointer to the lightstatus[] array</param>
+        /// <returns>Command to pass back to sender</returns>
         private /*unsafe*/ static string interpretCommand(string cmd, ref int[] lightstatus) //Use for debugging purposes until DBengine is functional
         {
             string[] cmda = cmd.Split('|');
