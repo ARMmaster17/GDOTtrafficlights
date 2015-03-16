@@ -21,7 +21,7 @@ namespace Core
         {
             Console.WriteLine("Starting up...");
             //Insert startup args + variables
-            Librarian librarian = new Librarian(); //DBengine database manager
+            //Librarian librarian = new Librarian(); //DBengine database manager
             int[] trafficstats = {0, 0}; //Temporary array until DBengine is operational
             string appDir;  //Working directory of application
             string appLang = "en-us"; //Language used by application, English by default
