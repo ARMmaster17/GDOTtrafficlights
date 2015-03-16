@@ -7,6 +7,7 @@ notifications:
   email: false
   hipchat: 587277e57c288cf83baf3695be8193@1315892
 script:
+  - chmod +x ./build.sh
   - ./build.sh
 deploy:
   provider: releases
