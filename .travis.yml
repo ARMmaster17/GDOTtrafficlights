@@ -6,3 +6,10 @@ branches:
 notifications:
   email: false
   hipchat: 587277e57c288cf83baf3695be8193@1315892
+deploy:
+  provider: releases
+  api_key: "decd3221b01481876b77d479bddbacadb694aa8c"
+  file: ""
+  skip_cleanup: true
+  on:
+    tags: true
