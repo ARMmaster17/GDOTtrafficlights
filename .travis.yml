@@ -11,7 +11,8 @@ script:
 deploy:
   provider: releases
   api_key: "decd3221b01481876b77d479bddbacadb694aa8c"
-  file: ""
+  file:
+    - "./Core/bin/Release/Core.exe"
   skip_cleanup: true
   on:
     tags: true
