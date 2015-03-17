@@ -27,4 +27,6 @@ mkdir TLpserver
 cd ..
 cp ./TLpserver/bin/Release/TLpserver.exe ./latest/TLserver/TLserver.exe
 
+# TAR AND ZIP
+echo 'Exporting to .tar.gz'
 tar -czf latest.tar.gz ./latest
